@@ -1,33 +1,46 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "Window.h"
+#include <string>
 
 
 
 window::window(){
 
-	window = nullptr;
+	_window = nullptr;
 	setFullscreen = false;
-	window = SDL_CreateWindow(){"Turn based Calculator", 600, 480, SDL_WINDOW_RESIZABLE}
+	_window = SDL_CreateWindow("Turn based Calculator",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, 600, 480, SDL_WINDOW_RESIZABLE);
 
 }
 
 
+void window::set_title( const std::string &title){
 
-
-void window::set_windowSize(int width, int height){
-SDL_SetWindowSize(window, width, height);
-	if(!SDL_SetWindowSize()){
-		std::cout << "Cannot set window size" << std::endl;
+	SDL_SetWindowTitle(_window,title.c_str());
+	if(title.c_str() == NULL){
+		std::cout << "Could not change title of window" << std::endl;
+		SDL_GetError();
 	}
 }
 
-void window:;set_fullscreen(bool state){
-if (!SetWindowFullscreen(window,  state)){
+
+void window::set_windowSize(int width, int height){
+	SDL_SetWindowSize(_window, width,height);
+	
+	
+}
+
+void window::set_fullscreen(bool state){
+if (!SDL_SetWindowFullscreen(_window,  state)){
 		std::cout << "Could not set window to full screen" << std::endl;
 	}
 	setFullscreen = state;
 
+}
+
+
+window::~window(){
+	SDL_DestroyWindow(_window);
 }
 
 

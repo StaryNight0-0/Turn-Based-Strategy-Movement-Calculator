@@ -8,13 +8,14 @@ set(CMAKE_CXX_EXTENSIONS        OFF)
 find_package(SDL2 REQUIRED CONFIG REQUIRED COMPONENTS SDL2)
 
 add_library(main STATIC
-	       src/Main.cpp)
+	       src/Main.cpp
+               src/Window.cpp)
 
 target_include_directories(main PUBLIC src)
 target_link_libraries(main PRIVATE SDL2::SDL2)
 
-add_executable(${PROJECT_NAME} private src)
-target_include_directories($(PROJECT_NAME) PRIVATE src )
+add_executable(${PROJECT_NAME} src/Main.cpp)
+target_include_directories(${PROJECT_NAME} PRIVATE src )
 target_link_libraries(${PROJECT_NAME} PRIVATE
                       SDL2::SDL2
                        main)
